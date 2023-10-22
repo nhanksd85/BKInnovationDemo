@@ -1,9 +1,12 @@
+#export DISPLAY=:0.0
+#size = 1024 x 600
+print("Hello BK Innovation Demo")
+
 import time
 
-print("Hello BK Innovation Demo")
 import tkinter as tk
 from tkinter import *
-
+from mqtt import *
 window = tk.Tk()
 
 window.attributes('-fullscreen', True)
