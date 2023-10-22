@@ -15,7 +15,9 @@ from Utilities.softwaretimer import *
 from Utilities.modbus485 import *
 import Utilities.modbus485
 
-ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+#ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+ser = serial.Serial(port="COM3", baudrate=9600)
+
 m485 = Utilities.modbus485.Modbus485(ser)
 
 window = tk.Tk()
@@ -27,23 +29,26 @@ is_on = False
 def toggle_button_click_1():
     global  is_on
     print("Button 1 is clicked")
-
     if is_on:
         on_button_v1.config(image=off)
         is_on = False
-        m485.modbus485_send(relay1_OFF)
+        #m485.modbus485_send(relay1_OFF)
     else:
         on_button_v1.config(image=on)
         is_on = True
-        m485.modbus485_send(relay1_ON)
+        #m485.modbus485_send(relay1_ON)
 
 
     pass
-def toggle_button_click_1():
+def toggle_button_click_2():
     print("Button 2 is clicked")
     #m485.modbus485_send(relay1_OFF)
     pass
 
+def toggle_button_click_3():
+    print("Button 2 is clicked")
+    #m485.modbus485_send(relay1_OFF)
+    pass
 
 
 #window.attributes('-fullscreen', True)
@@ -57,8 +62,11 @@ on = PhotoImage(file="Images/on_button.png")
 off = PhotoImage(file="Images/off_button.png")
 on_button_v1 = Button(window, image=on, bd=0, command=toggle_button_click_1, justify=CENTER)
 on_button_v2 = Button(window, image=on, bd=0, command=toggle_button_click_2, justify=CENTER)
-on_button_v1.place(x=100, y=100, width=500)
-on_button_v1.place(x=200, y=100, width=500)
+on_button_v3 = Button(window, image=on, bd=0, command=toggle_button_click_3, justify=CENTER)
+
+on_button_v1.place(x=250, y=400)
+on_button_v2.place(x=250, y=450)
+on_button_v2.place(x=250, y=500)
 
 while True:
     window.update()
