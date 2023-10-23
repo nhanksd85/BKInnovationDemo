@@ -24,15 +24,6 @@ m485 = Utilities.modbus485.Modbus485(ser)
 
 window = tk.Tk()
 
-relay1_ON = [1, 6, 0, 0, 0, 255, 201, 138]
-relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
-
-relay1_ON = [1, 6, 0, 0, 0, 255, 201, 138]
-relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
-
-relay1_ON = [1, 6, 0, 0, 0, 255, 201, 138]
-relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
-
 # is_on = False
 # def toggle_button_click_1():
 #     global  is_on
@@ -116,29 +107,29 @@ labelSoil.place(x=50, y=220, width=300, height=20)
 
 
 
-labelAir = tk.Label(text="KHÔNG KHÍ",fg="#00ff00",justify=CENTER,font="Helvetica 20 bold")
+labelAir = tk.Label(text="KHÔNG KHÍ",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAir.place(x=350, y=0, width=300, height=100)
 
-labelAir = tk.Label(text="NHIỆT ĐỘ (°C)",fg="#00ff00",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="NHIỆT ĐỘ (°C)",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=350, y=80, width=150, height=20)
-labelAir = tk.Label(text="ĐỘ ẨM (%)",fg="#00ff00",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="ĐỘ ẨM (%)",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=500, y=80, width=150, height=20)
 
-labelAirTemp = tk.Label(text="335",fg="#00ff00",justify=CENTER,font="Helvetica 20 bold")
+labelAirTemp = tk.Label(text="335",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirTemp.place(x=350, y = 100, width=150)
 
-labelAirHumi = tk.Label(text="700",fg="#00ff00",justify=CENTER,font="Helvetica 20 bold")
+labelAirHumi = tk.Label(text="700",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirHumi.place(x=500, y = 100, width=150)
 
-labelAir = tk.Label(text="PH ()",fg="#00ff00",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="PH ()",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=350, y=150, width=150, height=20)
-labelAir = tk.Label(text="EC (ppm)",fg="#00ff00",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="EC (ppm)",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=500, y=150, width=150, height=20)
 
-labelAirCO2 = tk.Label(text="5",fg="#00ff00",justify=CENTER,font="Helvetica 20 bold")
+labelAirCO2 = tk.Label(text="5",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirCO2.place(x=350, y = 170, width=150)
 
-labelAirLux = tk.Label(text="10",fg="#00ff00",justify=CENTER,font="Helvetica 20 bold")
+labelAirLux = tk.Label(text="10",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirLux.place(x=500, y = 170, width=150)
 
 
@@ -260,9 +251,13 @@ def mqtt_callback(msg):
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
             if s["sensor_name"].find("EC") >=0:
-                labelSoilEC.config(text = s["sensor_value"])
-            # if s["sensor_name"].find("PH") >=0:
-            #     labelSoilPH.config(s["sensor_value"])
+                labelWaterEC.config(text = s["sensor_value"])
+            if s["sensor_name"].find("PH") >=0:
+                 labelWaterPH.config(text =s["sensor_value"])
+            if s["sensor_name"].find("ORP") >=0:
+                 labelWaterORP.config(text =s["sensor_value"])
+            if s["sensor_name"].find("Nhiệt") >=0:
+                 labelWaterTemp.config(text =s["sensor_value"])
 
 mqttObject = MQTTHelper()
 mqttObject.setRecvCallBack(mqtt_callback)

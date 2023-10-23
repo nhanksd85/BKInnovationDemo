@@ -7,11 +7,15 @@ class MQTTHelper:
     MQTT_USERNAME = "innovation"
     MQTT_PASSWORD = "Innovation_RgPQAZoA5N"
     MQTT_TOPIC_PUB = "/innovation/soilmonitoring"
-    MQTT_TOPIC_SUB = "/innovation/soilmonitoring"
+    MQTT_TOPIC_SUB_SOIL = "/innovation/soilmonitoring"
+    MQTT_TOPIC_SUB_WATER = "/innovation/watermonitoring/"
+    MQTT_TOPIC_SUB_AIR = "/innovation/airmonitoring/"
     recvCallBack = None
     def mqtt_connected(self, client, userdata, flags, rc):
         print("Connected succesfully!!")
-        client.subscribe(self.MQTT_TOPIC_SUB)
+        client.subscribe(self.MQTT_TOPIC_SUB_SOIL)
+        client.subscribe(self.MQTT_TOPIC_SUB_WATER)
+        client.subscribe(self.MQTT_TOPIC_SUB_AIR)
 
     def mqtt_subscribed(self, client, userdata, mid, granted_qos):
         print("Subscribed to Topic!!!")
