@@ -16,15 +16,16 @@ from Utilities.modbus485 import *
 import Utilities.modbus485
 from Utilities.togglebutton import *
 from mqtt import *
+from Utilities.constant import *
 
-#ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
-try:
-    ser = serial.Serial(port="COM7", baudrate=115200)
-except:
-    print("Modbus485**","Failed to write data")
+ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+# try:
+#     ser = serial.Serial(port="COM7", baudrate=115200)
+# except:
+#     print("Modbus485**","Failed to write data")
 
 
-# m485 = Utilities.modbus485.Modbus485(ser)
+m485 = Utilities.modbus485.Modbus485(ser)
 
 window = tk.Tk()
 
@@ -43,39 +44,71 @@ window = tk.Tk()
 
 def btn_valve_1_onClick(state):
     print("Button1 is click", state)
+    if state:
+        m485.modbus485_send(relay1_ON)
+    else:
+        m485.modbus485_send(relay1_OFF)
     pass
 
 def btn_valve_2_onClick(state):
     print("Button2 is click", state)
+    if state:
+        m485.modbus485_send(relay2_ON)
+    else:
+        m485.modbus485_send(relay2_OFF)
     pass
 
 def btn_valve_3_onClick(state):
     print("Button3 is click", state)
+    if state:
+        m485.modbus485_send(relay3_ON)
+    else:
+        m485.modbus485_send(relay3_OFF)
     pass
 
 def btn_pump_flow_1_onClick(state):
     print("Flow 1 is click", state)
+    if state:
+        m485.modbus485_send(relay4_ON)
+    else:
+        m485.modbus485_send(relay4_OFF)
     pass
 
 def btn_pump_flow_2_onClick(state):
     print("Flow 2 is click", state)
+    if state:
+        m485.modbus485_send(relay5_ON)
+    else:
+        m485.modbus485_send(relay5_OFF)
     pass
 
 def btn_pump_flow_3_onClick(state):
     print("Flow 3 is click", state)
+    if state:
+        m485.modbus485_send(relay6_ON)
+    else:
+        m485.modbus485_send(relay6_OFF)
     pass
 
 def btn_pump_1_onClick(state):
     print("Pump 1 is click", state)
+    if state:
+        m485.modbus485_send(relay7_ON)
+    else:
+        m485.modbus485_send(relay7_OFF)
     pass
 
 def btn_pump_2_onClick(state):
     print("Pump 2 is click", state)
+    if state:
+        m485.modbus485_send(relay8_ON)
+    else:
+        m485.modbus485_send(relay8_OFF)
     pass
 
 
-#window.attributes('-fullscreen', True)
-window.geometry("1024x600")
+window.attributes('-fullscreen', True)
+#window.geometry("1024x600")
 window.title("Rapido Project")
 screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
