@@ -300,18 +300,18 @@ def mqtt_callback(msg):
     station_id = data["station_id"]
     sensors = data["sensors"]
     if station_id == "water_0001":
-        print(data)
+        value = round(s["sensor_value"], 2)
         for s in sensors:
             print("Id", s["sensor_id"])
             print("Value", s["sensor_value"])
             if s["sensor_id"] == "ec_0001":
-                labelWaterEC.config(text = s["sensor_value"])
+                labelWaterEC.config(text = value)
             if s["sensor_id"] == "ph_0001":
-                labelWaterPH.config(text = s["sensor_value"])
+                labelWaterPH.config(text = value)
             if s["sensor_id"] == "ORP_0001":
-                labelWaterORP.config(text = s["sensor_value"])
+                labelWaterORP.config(text = value)
             if s["sensor_id"] == "TEMP_0001":
-                labelWaterTemp.config(text = s["sensor_value"])
+                labelWaterTemp.config(text = value)
 
     if station_id == "soil_0001":
         for s in sensors:
