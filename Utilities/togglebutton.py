@@ -17,7 +17,7 @@ class ToggleButton:
 
         self.on_click_event(self.is_on)
     
-    def update_button_click(self,state):
+    def update_button_click(self, state):
         self.is_on = state
         if self.is_on:
             self.on_button.config(image=self.on)
