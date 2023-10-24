@@ -7,7 +7,7 @@ class MQTTHelper:
     MQTT_USERNAME = "innovation"
     MQTT_PASSWORD = "Innovation_RgPQAZoA5N"
     MQTT_TOPIC_PUB = "/innovation/soilmonitoring"
-    MQTT_TOPIC_SUB_SOIL = "/innovation/soilmonitoring"
+    MQTT_TOPIC_SUB_SOIL = "/innovation/soilmonitoring/"
     MQTT_TOPIC_SUB_WATER = "/innovation/watermonitoring/"
     MQTT_TOPIC_SUB_AIR = "/innovation/airmonitoring/"
     recvCallBack = None
