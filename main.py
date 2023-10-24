@@ -16,6 +16,7 @@ from Utilities.modbus485 import *
 import Utilities.modbus485
 from Utilities.togglebutton import *
 from mqtt import *
+from Utilities.constant import *
 
 ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
 # try:
@@ -43,6 +44,10 @@ window = tk.Tk()
 
 def btn_valve_1_onClick(state):
     print("Button1 is click", state)
+    if state:
+        m485.modbus485_send(relay1_ON)
+    else:
+        m485.modbus485_send(relay1_OFF)
     pass
 
 def btn_valve_2_onClick(state):
@@ -74,8 +79,8 @@ def btn_pump_2_onClick(state):
     pass
 
 
-#window.attributes('-fullscreen', True)
-window.geometry("1024x600")
+window.attributes('-fullscreen', True)
+#window.geometry("1024x600")
 window.title("Rapido Project")
 screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
