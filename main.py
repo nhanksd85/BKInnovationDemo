@@ -114,6 +114,26 @@ screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
 print("Size:", screen_width, screen_height)
 
+####### SET VARIABLE
+
+btn_var_1 = tk.BooleanVar()
+btn_var_1.set(False)
+btn_var_2 = tk.BooleanVar()
+btn_var_2.set(False)
+btn_var_3 = tk.BooleanVar()
+btn_var_3.set(False)
+
+btn_var1 = tk.BooleanVar()
+btn_var1.set(False)
+btn_var2 = tk.BooleanVar()
+btn_var2.set(False)
+btn_var3 = tk.BooleanVar()
+btn_var3.set(False)
+btn_var4 = tk.BooleanVar()
+btn_var4.set(False)
+btn_var5 = tk.BooleanVar()
+btn_var5.set(False)
+
 ##### SOIL LABEL
 
 labelSoil = tk.Label(text="ĐẤT TRỒNG",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
@@ -293,16 +313,6 @@ btn_pump_2.button_place(860, 425)
 
 ##### SUBCRIBE SERVER
 
-btn_var_1 = False
-btn_var_2 = False
-btn_var_3 = False
-
-btn_var1 = False
-btn_var2 = False
-btn_var3 = False
-btn_var4 = False
-btn_var5 = False
-
 def mqtt_callback(msg):
     print("Main.py  ---", msg)
 
@@ -361,19 +371,22 @@ def mqtt_callback(msg):
             print("Value", s["sensor_value"])
             if s["sensor_id"] == "valve_0001":
                 btn_valve_1.update_button_click(s["sensor_value"])
-                if btn_var_1 != btn_valve_1.is_on: 
+                value1 = btn_var_1.get()
+                if value1 != btn_valve_1.is_on: 
                     btn_valve_1_onClick(btn_valve_1.is_on)
-                    btn_var_1 = btn_valve_1.is_on
+                    value1 = btn_valve_1.is_on
             if s["sensor_id"] == "valve_0002":
                 btn_valve_2.update_button_click(s["sensor_value"])
-                if btn_var_2 != btn_valve_2.is_on:
+                value2 = btn_var_2.get()
+                if value2 != btn_valve_2.is_on:
                     btn_valve_2_onClick(btn_valve_2.is_on)
-                    btn_var_2 = btn_valve_2.is_on
+                    value2 = btn_valve_2.is_on
             if s["sensor_id"] == "valve_0003":
                 btn_valve_3.update_button_click(s["sensor_value"])
-                if btn_var_3 != btn_valve_3.is_on:
+                value3 = btn_var_3.get()
+                if value3 != btn_valve_3.is_on:
                     btn_valve_3_onClick(btn_valve_3.is_on)
-                    btn_var_3 = btn_valve_3.is_on
+                    value3 = btn_valve_3.is_on
     
     if station_id == "PUMP_0001":
         for s in sensors:
@@ -381,29 +394,34 @@ def mqtt_callback(msg):
             print("Value", s["sensor_value"])
             if s["sensor_id"] == "pump_0001":
                 btn_pump_flow_1.update_button_click(s["sensor_value"])
-                if btn_var1 != btn_pump_flow_1.is_on:
+                value_1 = btn_var1.get()
+                if value_1 != btn_pump_flow_1.is_on:
                     btn_pump_flow_1_onClick(btn_pump_flow_1.is_on)
-                    btn_var1 = btn_pump_flow_1.is_on
+                    value_1 = btn_pump_flow_1.is_on
             if s["sensor_id"] == "pump_0002":
                 btn_pump_flow_2.update_button_click(s["sensor_value"])
-                if btn_var2 != btn_pump_flow_2.is_on:
+                value_2 = btn_var2.get()
+                if value_2 != btn_pump_flow_2.is_on:
                     btn_pump_flow_2_onClick(btn_pump_flow_2.is_on)
-                    btn_var2 = btn_pump_flow_2.is_on
+                    value_2 = btn_pump_flow_2.is_on
             if s["sensor_id"] == "pump_0003":
                 btn_pump_flow_3.update_button_click(s["sensor_value"])
-                if btn_var3 != btn_pump_flow_3.is_on:
+                value_3 = btn_var3.get()
+                if value_3 != btn_pump_flow_3.is_on:
                     btn_pump_flow_3_onClick(btn_pump_flow_3.is_on)
-                    btn_var3 = btn_pump_flow_3.is_on
+                    value_3 = btn_pump_flow_3.is_on
             if s["sensor_id"] == "pump_0004":
                 btn_pump_1.update_button_click(s["sensor_value"])
-                if btn_var4 != btn_pump_1.is_on:
+                value_4 = btn_var4.get()
+                if value_4 != btn_pump_1.is_on:
                     btn_pump_1_onClick(btn_pump_1.is_on)
-                    btn_var4 = btn_pump_1.is_on
+                    value_4 = btn_pump_1.is_on
             if s["sensor_id"] == "pump_0005":
                 btn_pump_2.update_button_click(s["sensor_value"])
-                if btn_var5 != btn_pump_2.is_on:
+                value_5 = btn_var5.get()
+                if  value_5 != btn_pump_2.is_on:
                     btn_pump_2_onClick(btn_pump_2.is_on)
-                    btn_var5 = btn_pump_2.is_on
+                    value_5 = btn_pump_2.is_on
 
 mqttObject = MQTTHelper()
 mqttObject.setRecvCallBack(mqtt_callback)
