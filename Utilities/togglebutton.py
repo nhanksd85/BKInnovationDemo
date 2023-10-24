@@ -21,8 +21,10 @@ class ToggleButton:
         self.is_on = state
         if self.is_on:
             self.on_button.config(image=self.on)
+            self.is_on = True
         else:
             self.on_button.config(image=self.off)
+            self.is_on = False
 
         self.on_click_event(self.is_on)
 
