@@ -106,9 +106,17 @@ labelSoilPH.place(x=50, y = 170, width=150)
 labelSoilEC = tk.Label(text="10",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
 labelSoilEC.place(x=200, y = 170, width=150)
 
-labelSoil = tk.Label(text="N    P    K",fg="#ff0000",justify=CENTER,font="Helvetica 15")
+labelSoil = tk.Label(text="N                 P                 K",fg="#ff0000",justify=CENTER,font="Helvetica 15")
 labelSoil.place(x=50, y=220, width=300, height=20)
 
+labelSoilN = tk.Label(text="10",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
+labelSoilN.place(x=35, y = 245, width=100)
+
+labelSoilP = tk.Label(text="10",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
+labelSoilP.place(x=147, y = 245, width=100)
+
+labelSoilK = tk.Label(text="10",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
+labelSoilK.place(x=263, y = 245, width=100)
 
 
 labelAir = tk.Label(text="KHÔNG KHÍ",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
@@ -263,7 +271,7 @@ def mqtt_callback(msg):
             if s["sensor_name"].find("Nhiệt") >=0:
                 labelWaterTemp.config(text = s["sensor_value"])
 
-    if station_id == "SOIL_0001":
+    if station_id == "soil_0001":
         for s in sensors:
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
@@ -275,12 +283,12 @@ def mqtt_callback(msg):
                 labelSoilPH.config(text = s["sensor_value"])
             if s["sensor_name"] == "EC":
                 labelSoilEC.config(text = s["sensor_value"])
-            # if s["sensor_name"] == "N":
-            #     labelWaterTemp.config(text =s["sensor_value"])
-            # if s["sensor_name"] == "P":
-            #      labelWaterTemp.config(text =s["sensor_value"])
-            # if s["sensor_name"] == "K":
-            #     labelWaterTemp.config(text =s["sensor_value"])
+            if s["sensor_name"] == "N":
+                labelSoilN.config(text =s["sensor_value"])
+            if s["sensor_name"] == "P":
+                 labelSoilP.config(text =s["sensor_value"])
+            if s["sensor_name"] == "K":
+                labelSoilK.config(text =s["sensor_value"])
 
     if station_id == "air_0001":
         for s in sensors:
