@@ -303,7 +303,7 @@ def mqtt_callback(msg):
         for s in sensors:
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
-            if s["sensor_id"] == "sensor_id":
+            if s["sensor_id"] == "ec_0001":
                 labelWaterEC.config(text = s["sensor_value"])
             if s["sensor_id"] == "ph_0001":
                 labelWaterPH.config(text = s["sensor_value"])
