@@ -17,6 +17,7 @@ class MQTTHelper:
         client.subscribe(self.MQTT_TOPIC_SUB_WATER)
         client.subscribe(self.MQTT_TOPIC_SUB_AIR)
 
+        
     def mqtt_subscribed(self, client, userdata, mid, granted_qos):
         print("Subscribed to Topic!!!")
 
@@ -31,7 +32,7 @@ class MQTTHelper:
         self.mqttClient.username_pw_set(self.MQTT_USERNAME, self.MQTT_PASSWORD)
         self.mqttClient.connect(self.MQTT_SERVER, int(self.MQTT_PORT), 60)
 
-        #Register mqtt events
+        # Register mqtt events
         self.mqttClient.on_connect = self.mqtt_connected
         self.mqttClient.on_subscribe = self.mqtt_subscribed
         self.mqttClient.on_message = self.mqtt_recv_message

@@ -18,9 +18,13 @@ from Utilities.togglebutton import *
 from mqtt import *
 
 #ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
-ser = serial.Serial(port="COM3", baudrate=9600)
+try:
+    ser = serial.Serial(port="COM7", baudrate=115200)
+except:
+    print("Modbus485**","Failed to write data")
 
-m485 = Utilities.modbus485.Modbus485(ser)
+
+# m485 = Utilities.modbus485.Modbus485(ser)
 
 window = tk.Tk()
 
@@ -121,9 +125,9 @@ labelAirTemp.place(x=350, y = 100, width=150)
 labelAirHumi = tk.Label(text="700",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirHumi.place(x=500, y = 100, width=150)
 
-labelAir = tk.Label(text="PH ()",fg="#099940",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="Độ sáng",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=350, y=150, width=150, height=20)
-labelAir = tk.Label(text="EC (ppm)",fg="#099940",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="CO2",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=500, y=150, width=150, height=20)
 
 labelAirCO2 = tk.Label(text="5",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
@@ -253,17 +257,51 @@ def mqtt_callback(msg):
             if s["sensor_name"].find("EC") >=0:
                 labelWaterEC.config(text = s["sensor_value"])
             if s["sensor_name"].find("PH") >=0:
-                 labelWaterPH.config(text =s["sensor_value"])
+                labelWaterPH.config(text = s["sensor_value"])
             if s["sensor_name"].find("ORP") >=0:
-                 labelWaterORP.config(text =s["sensor_value"])
+                labelWaterORP.config(text = s["sensor_value"])
             if s["sensor_name"].find("Nhiệt") >=0:
-                 labelWaterTemp.config(text =s["sensor_value"])
+                labelWaterTemp.config(text = s["sensor_value"])
+
+    if station_id == "SOIL_0001":
+        for s in sensors:
+            print("Name", s["sensor_name"])
+            print("Value", s["sensor_value"])
+            if s["sensor_name"] == "Nhiệt Độ":
+                labelSoilTemp.config(text = s["sensor_value"])
+            if s["sensor_name"] == "Độ Ẩm":
+                labelSoilHumi.config(text = s["sensor_value"])
+            if s["sensor_name"] == "PH":
+                labelSoilPH.config(text = s["sensor_value"])
+            if s["sensor_name"] == "EC":
+                labelSoilEC.config(text = s["sensor_value"])
+            # if s["sensor_name"] == "N":
+            #     labelWaterTemp.config(text =s["sensor_value"])
+            # if s["sensor_name"] == "P":
+            #      labelWaterTemp.config(text =s["sensor_value"])
+            # if s["sensor_name"] == "K":
+            #     labelWaterTemp.config(text =s["sensor_value"])
+
+    if station_id == "air_0001":
+        for s in sensors:
+            print("Name", s["sensor_name"])
+            print("Value", s["sensor_value"])
+            if s["sensor_name"] == "Nhiệt Độ":
+                labelAirTemp.config(text = s["sensor_value"])
+            if s["sensor_name"] == "Độ Ẩm":
+                labelAirHumi.config(text = s["sensor_value"])
+            if s["sensor_name"] == "Độ Sáng":
+                labelAirLux.config(text = s["sensor_value"])
+            if s["sensor_name"] == "CO2":
+                labelAirCO2.config(text = s["sensor_value"])
 
 mqttObject = MQTTHelper()
 mqttObject.setRecvCallBack(mqtt_callback)
 
+# mqtt.PUBLISH()
 
 window.mainloop()
+
 # while True:
 #     window.update()
 #     time.sleep(0.1)
