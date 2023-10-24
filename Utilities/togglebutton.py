@@ -23,13 +23,13 @@ class ToggleButton:
             self.on_button.config(image=self.on)
         else:
             self.on_button.config(image=self.off)
-
+        self.func(state)
 
     def __init__(self, win):
-        self.on = PhotoImage(file="E:/Documents/Thesis Proposal/BKInnovationDemo/Images/on_button_m.png")
-        self.off = PhotoImage(file="E:/Documents/Thesis Proposal/BKInnovationDemo/Images/off_button_m.png")
-        # self.on = PhotoImage(file="Images/on_button_m.png")
-        # self.off = PhotoImage(file="Images/off_button_m.png")
+        # self.on = PhotoImage(file="E:/Documents/Thesis Proposal/BKInnovationDemo/Images/on_button_m.png")
+        # self.off = PhotoImage(file="E:/Documents/Thesis Proposal/BKInnovationDemo/Images/off_button_m.png")
+        self.on = PhotoImage(file="Images/on_button_m.png")
+        self.off = PhotoImage(file="Images/off_button_m.png")
 
         self.is_on = False
         self.on_button = Button(win, image=self.off, bd=0, command=self.toggle_button_click, justify=CENTER)
