@@ -102,8 +102,8 @@ def btn_pump_2_onClick(state):
     print(type(state))
     print("Pump 2 is click", state)
     if state:
+        print(relay8_ON)
         m485.modbus485_send(relay8_ON)
-        print("hello")
     else:
         m485.modbus485_send(relay8_OFF)
     pass
