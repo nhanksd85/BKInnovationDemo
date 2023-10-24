@@ -17,14 +17,14 @@ import Utilities.modbus485
 from Utilities.togglebutton import *
 from mqtt import *
 
-#ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
-try:
-    ser = serial.Serial(port="COM7", baudrate=115200)
-except:
-    print("Modbus485**","Failed to write data")
+ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+# try:
+#     ser = serial.Serial(port="COM7", baudrate=115200)
+# except:
+#     print("Modbus485**","Failed to write data")
 
 
-# m485 = Utilities.modbus485.Modbus485(ser)
+m485 = Utilities.modbus485.Modbus485(ser)
 
 window = tk.Tk()
 
