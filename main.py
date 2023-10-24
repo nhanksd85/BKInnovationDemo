@@ -81,6 +81,8 @@ screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
 print("Size:", screen_width, screen_height)
 
+##### SOIL LABEL
+
 labelSoil = tk.Label(text="ĐẤT TRỒNG",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
 labelSoil.place(x=50, y=0, width=300, height=100)
 
@@ -118,6 +120,7 @@ labelSoilP.place(x=147, y = 245, width=100)
 labelSoilK = tk.Label(text="10",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
 labelSoilK.place(x=263, y = 245, width=100)
 
+##### AIR LABEL
 
 labelAir = tk.Label(text="KHÔNG KHÍ",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAir.place(x=350, y=0, width=300, height=100)
@@ -144,7 +147,7 @@ labelAirCO2.place(x=350, y = 170, width=150)
 labelAirLux = tk.Label(text="10",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirLux.place(x=500, y = 170, width=150)
 
-
+##### WATER LABEL
 
 labelWater = tk.Label(text="NƯỚC TƯỚI",fg="#0000ff",justify=CENTER,font="Helvetica 20 bold")
 labelWater.place(x=700, y=0, width=300, height=100)
@@ -172,6 +175,7 @@ labelWaterEC.place(x=700, y = 170, width=150)
 labelWaterORP = tk.Label(text="10",fg="#0000ff",justify=CENTER,font="Helvetica 20 bold")
 labelWaterORP.place(x=850, y = 170, width=150)
 
+##### FIRST GROUP BUTTON
 
 labelMixNutriFood = tk.Label(text="TRỘN DINH DƯỠNG",
                                     fg="#0000ff",
@@ -201,6 +205,7 @@ btn_valve_3 = ToggleButton(window)
 btn_valve_3.setClickEvent(btn_valve_3_onClick)
 btn_valve_3.button_place(250, 500)
 
+##### SECOND GROUP BUTTON
 
 labelRegion = tk.Label(text="PHÂN KHU TƯỚI",
                                     fg="#0000ff",
@@ -229,6 +234,8 @@ btn_pump_flow_3 = ToggleButton(window)
 btn_pump_flow_3.setClickEvent(btn_pump_flow_3_onClick)
 btn_pump_flow_3.button_place(550, 500)
 
+##### THIRD GROUP BUTTON
+
 labelPumps = tk.Label(text="MÁY BƠM CHÍNH",
                                     fg="#0000ff",
                                     justify=CENTER,
@@ -251,6 +258,7 @@ btn_pump_2 = ToggleButton(window)
 btn_pump_2.setClickEvent(btn_pump_2_onClick)
 btn_pump_2.button_place(860, 425)
 
+##### SUBCRIBE SERVER
 
 def mqtt_callback(msg):
     print("Main.py  ---", msg)
@@ -262,45 +270,45 @@ def mqtt_callback(msg):
         for s in sensors:
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
-            if s["sensor_name"].find("EC") >=0:
+            if s["sensor_id"] == "sensor_id":
                 labelWaterEC.config(text = s["sensor_value"])
-            if s["sensor_name"].find("PH") >=0:
+            if s["sensor_id"] == "ph_0001":
                 labelWaterPH.config(text = s["sensor_value"])
-            if s["sensor_name"].find("ORP") >=0:
+            if s["sensor_id"] == "ORP_0001":
                 labelWaterORP.config(text = s["sensor_value"])
-            if s["sensor_name"].find("Nhiệt") >=0:
+            if s["sensor_id"] == "TEMP_0001":
                 labelWaterTemp.config(text = s["sensor_value"])
 
-    if station_id == "soil_0001":
+    if station_id == "SOIL_0001":
         for s in sensors:
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
-            if s["sensor_name"] == "Nhiệt Độ":
+            if s["sensor_id"] == "temp_0001":
                 labelSoilTemp.config(text = s["sensor_value"])
-            if s["sensor_name"] == "Độ Ẩm":
+            if s["sensor_id"] == "humi_0001":
                 labelSoilHumi.config(text = s["sensor_value"])
-            if s["sensor_name"] == "PH":
+            if s["sensor_id"] == "ph_0001":
                 labelSoilPH.config(text = s["sensor_value"])
-            if s["sensor_name"] == "EC":
+            if s["sensor_id"] == "EC_0001":
                 labelSoilEC.config(text = s["sensor_value"])
-            if s["sensor_name"] == "N":
+            if s["sensor_id"] == "Nito_0001":
                 labelSoilN.config(text =s["sensor_value"])
-            if s["sensor_name"] == "P":
+            if s["sensor_id"] == "Photpho_0001":
                  labelSoilP.config(text =s["sensor_value"])
-            if s["sensor_name"] == "K":
+            if s["sensor_id"] == "Kali_0001":
                 labelSoilK.config(text =s["sensor_value"])
 
     if station_id == "air_0001":
         for s in sensors:
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
-            if s["sensor_name"] == "Nhiệt Độ":
+            if s["sensor_id"] == "temp_0001":
                 labelAirTemp.config(text = s["sensor_value"])
-            if s["sensor_name"] == "Độ Ẩm":
+            if s["sensor_id"] == "humi_0001":
                 labelAirHumi.config(text = s["sensor_value"])
-            if s["sensor_name"] == "Độ Sáng":
+            if s["sensor_id"] == "illuminance_0001":
                 labelAirLux.config(text = s["sensor_value"])
-            if s["sensor_name"] == "CO2":
+            if s["sensor_id"] == "CO2_0001":
                 labelAirCO2.config(text = s["sensor_value"])
 
 mqttObject = MQTTHelper()
