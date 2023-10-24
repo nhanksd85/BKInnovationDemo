@@ -300,7 +300,7 @@ def mqtt_callback(msg):
     station_id = data["station_id"]
     sensors = data["sensors"]
     if station_id == "water_0001":
-        value = round(s["sensor_value"], 2)
+        value = round(float(s["sensor_value"]), 2)
         for s in sensors:
             print("Id", s["sensor_id"])
             print("Value", s["sensor_value"])
