@@ -18,11 +18,11 @@ from Utilities.togglebutton import *
 from mqtt import *
 from Utilities.constant import *
 
-ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
-# try:
-#     ser = serial.Serial(port="COM7", baudrate=115200)
-# except:
-#     print("Modbus485**","Failed to write data")
+#ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+try:
+    ser = serial.Serial(port="COM7", baudrate=115200)
+except:
+    print("Modbus485**","Failed to write data")
 
 
 m485 = Utilities.modbus485.Modbus485(ser)
@@ -72,6 +72,7 @@ def btn_pump_flow_1_onClick(state):
         m485.modbus485_send(relay4_ON)
     else:
         m485.modbus485_send(relay4_OFF)
+        print("hello")
     pass
 
 def btn_pump_flow_2_onClick(state):
