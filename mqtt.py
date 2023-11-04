@@ -13,13 +13,14 @@ class MQTTHelper:
     MQTT_TOPIC_SUB_VALVE = "/innovation/valvecontroller/"
     MQTT_TOPIC_SUB_PUMP = "/innovation/pumpcontroller/"
     recvCallBack = None
+
     def mqtt_connected(self, client, userdata, flags, rc):
         print("Connected succesfully!!")
         client.subscribe(self.MQTT_TOPIC_SUB_SOIL)
         client.subscribe(self.MQTT_TOPIC_SUB_WATER)
         client.subscribe(self.MQTT_TOPIC_SUB_AIR)
-        client.subscribe(self.MQTT_TOPIC_SUB_VALVE)
-        client.subscribe(self.MQTT_TOPIC_SUB_PUMP)
+        #client.subscribe(self.MQTT_TOPIC_SUB_VALVE)
+        #client.subscribe(self.MQTT_TOPIC_SUB_PUMP)
 
         
     def mqtt_subscribed(self, client, userdata, mid, granted_qos):
@@ -46,3 +47,5 @@ class MQTTHelper:
     def setRecvCallBack(self, func):
         self.recvCallBack = func
 
+    def publish(self, topic, message):
+        self.mqttClient.publish(topic, str(message), retain=True)

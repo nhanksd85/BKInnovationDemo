@@ -11,6 +11,7 @@ import time
 import tkinter as tk
 from tkinter import *
 
+
 from Utilities.softwaretimer import *
 from Utilities.modbus485 import *
 import Utilities.modbus485
@@ -18,97 +19,139 @@ from Utilities.togglebutton import *
 from mqtt import *
 from Utilities.constant import *
 
-ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+from Model.PumpStationModel import *
+from Model.PumpModel import *
+
+#ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
 # try:
 #     ser = serial.Serial(port="COM7", baudrate=115200)
 # except:
 #     print("Modbus485**","Failed to write data")
 
+#m485 = Utilities.modbus485.Modbus485(ser)
 
-m485 = Utilities.modbus485.Modbus485(ser)
+
+valveStation = PumpStation("valve_station_0001", "Trộn Dinh Dưỡng", 106.89, 10.5)
+
+valve1 = Pump("pump_0001", "Dung Dịch 1", 0, "")
+valve2 = Pump("pump_0002", "Dung Dịch 2", 0, "")
+valve3 = Pump("pump_0003", "Dung Dịch 3", 0, "")
+
+valveStation.addPump(valve1)
+valveStation.addPump(valve2)
+valveStation.addPump(valve3)
+print("****", valveStation.to_json())
+
+pumpStation = PumpStation("pump_station_0001", "Trạm tưới tiêu", 106.89, 10.5)
+
+
+pump4 = Pump("pump_0004", "Phân Khu 1", 0, "")
+pump5 = Pump("pump_0005", "Phân Khu 1", 0, "")
+pump6 = Pump("pump_0006", "Phân Khu 1", 0, "")
+pump7 = Pump("pump_0007", "Bơm Vào", 0, "")
+pump8 = Pump("pump_0008", "Bơm Ra", 0, "")
+
+pumpStation.addPump(pump4)
+pumpStation.addPump(pump5)
+pumpStation.addPump(pump6)
+pumpStation.addPump(pump7)
+pumpStation.addPump(pump8)
+
+print(valveStation.to_json())
+print(pumpStation.to_json())
 
 window = tk.Tk()
-
-# is_on = False
-# def toggle_button_click_1():
-#     global  is_on
-#     print("Button 1 is clicked")
-#     if is_on:
-#         on_button_v1.config(image=off)
-#         is_on = False
-#         #m485.modbus485_send(relay1_OFF)
-#     else:
-#         on_button_v1.config(image=on)
-#         is_on = True
-#         #m485.modbus485_send(relay1_ON)
 
 def btn_valve_1_onClick(state):
     print("Button1 is click", state)
     if state:
-        m485.modbus485_send(relay1_ON)
+        #m485.modbus485_send(relay1_ON)
+        valve1.sensor_value = 1
     else:
-        m485.modbus485_send(relay1_OFF)
-    pass
+        #m485.modbus485_send(relay1_OFF)
+        valve1.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/valvecontroller/', valveStation.to_json())
 
 def btn_valve_2_onClick(state):
     print("Button2 is click", state)
     if state:
-        m485.modbus485_send(relay2_ON)
+        #m485.modbus485_send(relay2_ON)
+        valve2.sensor_value = 1
     else:
-        m485.modbus485_send(relay2_OFF)
-    pass
+        #m485.modbus485_send(relay2_OFF)
+        valve2.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/valvecontroller/', valveStation.to_json())
+
 
 def btn_valve_3_onClick(state):
     print("Button3 is click", state)
     if state:
-        m485.modbus485_send(relay3_ON)
+        #m485.modbus485_send(relay3_ON)
+        valve3.sensor_value = 1
     else:
-        m485.modbus485_send(relay3_OFF)
-    pass
+        #m485.modbus485_send(relay3_OFF)
+        valve3.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/valvecontroller/', valveStation.to_json())
+
 
 def btn_pump_flow_1_onClick(state):
     print("Flow 1 is click", state)
     if state:
-        m485.modbus485_send(relay4_ON)
+        #m485.modbus485_send(relay4_ON)
+        pump4.sensor_value = 1
     else:
-        m485.modbus485_send(relay4_OFF)
-    pass
+        #m485.modbus485_send(relay4_OFF)
+        pump4.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/innovation/pumpcontroller/', pumpStation.to_json())
+
 
 def btn_pump_flow_2_onClick(state):
     print("Flow 2 is click", state)
     if state:
-        m485.modbus485_send(relay5_ON)
+        #m485.modbus485_send(relay5_ON)
+        pump5.sensor_value = 1
     else:
-        m485.modbus485_send(relay5_OFF)
-    pass
+        #m485.modbus485_send(relay5_OFF)
+        pump5.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/innovation/pumpcontroller/', pumpStation.to_json())
+
 
 def btn_pump_flow_3_onClick(state):
     print("Flow 3 is click", state)
     if state:
-        m485.modbus485_send(relay6_ON)
+        #m485.modbus485_send(relay6_ON)
+        pump6.sensor_value = 1
     else:
-        m485.modbus485_send(relay6_OFF)
-    pass
+        #m485.modbus485_send(relay6_OFF)
+        pump6.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/innovation/pumpcontroller/', pumpStation.to_json())
+
 
 def btn_pump_1_onClick(state):
     print("Pump 1 is click", state)
     if state:
-        m485.modbus485_send(relay7_ON)
+        #m485.modbus485_send(relay7_ON)
+        pump7.sensor_value = 1
     else:
-        m485.modbus485_send(relay7_OFF)
-    pass
+        #m485.modbus485_send(relay7_OFF)
+        pump7.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/innovation/pumpcontroller/', pumpStation.to_json())
+
 
 def btn_pump_2_onClick(state):
     print("Pump 2 is click", state)
     if state:
-        m485.modbus485_send(relay8_ON)
+        #m485.modbus485_send(relay8_ON)
+        pump8.sensor_value = 1
     else:
-        m485.modbus485_send(relay8_OFF)
-    pass
+        #m485.modbus485_send(relay8_OFF)
+        pump8.sensor_value = 0
+    mqtt_publish(mqttObject,'/innovation/innovation/pumpcontroller/', pumpStation.to_json())
 
 
-window.attributes('-fullscreen', True)
-#window.geometry("1024x600")
+
+#window.attributes('-fullscreen', True)
+window.geometry("1024x600")
 window.title("Rapido Project")
 screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
@@ -422,6 +465,10 @@ def mqtt_callback(msg):
                 if  value_5 != btn_pump_2.is_on:
                     btn_pump_2_onClick(btn_pump_2.is_on)
                     value_5 = btn_pump_2.is_on
+
+def mqtt_publish(mqttobj, topic, msg):
+    mqttobj.publish(topic, msg)
+
 
 mqttObject = MQTTHelper()
 mqttObject.setRecvCallBack(mqtt_callback)
