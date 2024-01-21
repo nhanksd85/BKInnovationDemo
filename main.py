@@ -18,29 +18,15 @@ from Utilities.togglebutton import *
 from mqtt import *
 from Utilities.constant import *
 
-ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
-# try:
-#     ser = serial.Serial(port="COM7", baudrate=115200)
-# except:
-#     print("Modbus485**","Failed to write data")
-
+# ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+try:
+    ser = serial.Serial(port="COM7", baudrate=115200)
+except:
+    print("Modbus485**","Failed to write data")
 
 m485 = Utilities.modbus485.Modbus485(ser)
 
 window = tk.Tk()
-
-# is_on = False
-# def toggle_button_click_1():
-#     global  is_on
-#     print("Button 1 is clicked")
-#     if is_on:
-#         on_button_v1.config(image=off)
-#         is_on = False
-#         #m485.modbus485_send(relay1_OFF)
-#     else:
-#         on_button_v1.config(image=on)
-#         is_on = True
-#         #m485.modbus485_send(relay1_ON)
 
 def btn_valve_1_onClick(state):
     print("Button1 is click", state)
@@ -136,12 +122,12 @@ btn_var5.set(False)
 
 ##### SOIL LABEL
 
-labelSoil = tk.Label(text="ĐẤT TRỒNG",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
+labelSoil = tk.Label(text="SOIL STATION",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
 labelSoil.place(x=50, y=0, width=300, height=100)
 
-labelSoil = tk.Label(text="NHIỆT ĐỘ (°C)",fg="#ff0000",justify=CENTER,font="Helvetica 15")
+labelSoil = tk.Label(text="TEMP (°C)",fg="#ff0000",justify=CENTER,font="Helvetica 15")
 labelSoil.place(x=50, y=80, width=150, height=20)
-labelSoil = tk.Label(text="ĐỘ ẨM (%)",fg="#ff0000",justify=CENTER,font="Helvetica 15")
+labelSoil = tk.Label(text="HUMID (%)",fg="#ff0000",justify=CENTER,font="Helvetica 15")
 labelSoil.place(x=200, y=80, width=150, height=20)
 
 labelSoilTemp = tk.Label(text="35",fg="#ff0000",justify=CENTER,font="Helvetica 20 bold")
@@ -175,12 +161,12 @@ labelSoilK.place(x=263, y = 245, width=100)
 
 ##### AIR LABEL
 
-labelAir = tk.Label(text="KHÔNG KHÍ",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
+labelAir = tk.Label(text="AIR STATION",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAir.place(x=350, y=0, width=300, height=100)
 
-labelAir = tk.Label(text="NHIỆT ĐỘ (°C)",fg="#099940",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="TEMP (°C)",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=350, y=80, width=150, height=20)
-labelAir = tk.Label(text="ĐỘ ẨM (%)",fg="#099940",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="HUMID (%)",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=500, y=80, width=150, height=20)
 
 labelAirTemp = tk.Label(text="335",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
@@ -189,10 +175,10 @@ labelAirTemp.place(x=350, y = 100, width=150)
 labelAirHumi = tk.Label(text="700",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirHumi.place(x=500, y = 100, width=150)
 
-labelAir = tk.Label(text="Độ sáng",fg="#099940",justify=CENTER,font="Helvetica 15")
+labelAir = tk.Label(text="BRIGHT (Lux)",fg="#099940",justify=CENTER,font="Helvetica 15")
 labelAir.place(x=350, y=150, width=150, height=20)
-labelAir = tk.Label(text="CO2",fg="#099940",justify=CENTER,font="Helvetica 15")
-labelAir.place(x=500, y=150, width=150, height=20)
+labelAir = tk.Label(text="PRESSURE (Kpa)",fg="#099940",justify=CENTER,font="Helvetica 15")
+labelAir.place(x=495, y=150, width=160, height=20)
 
 labelAirCO2 = tk.Label(text="5",fg="#099940",justify=CENTER,font="Helvetica 20 bold")
 labelAirCO2.place(x=350, y = 170, width=150)
@@ -202,10 +188,10 @@ labelAirLux.place(x=500, y = 170, width=150)
 
 ##### WATER LABEL
 
-labelWater = tk.Label(text="NƯỚC TƯỚI",fg="#0000ff",justify=CENTER,font="Helvetica 20 bold")
+labelWater = tk.Label(text="WATER STATION",fg="#0000ff",justify=CENTER,font="Helvetica 20 bold")
 labelWater.place(x=700, y=0, width=300, height=100)
 
-labelWater = tk.Label(text="NHIỆT ĐỘ (°C)",fg="#0000ff",justify=CENTER,font="Helvetica 15")
+labelWater = tk.Label(text="TEMP (°C)",fg="#0000ff",justify=CENTER,font="Helvetica 15")
 labelWater.place(x=700, y=80, width=150, height=20)
 labelWater = tk.Label(text="PH ()",fg="#0000ff",justify=CENTER,font="Helvetica 15")
 labelWater.place(x=850, y=80, width=150, height=20)
@@ -317,10 +303,9 @@ def mqtt_callback(msg):
     print("Main.py  ---", msg)
 
     data = json.loads(msg)
-    station_id = data["station_id"]
-    sensors = data["sensors"]
-    if station_id == "water_0001":
-        for s in sensors:
+
+    if data["station_id"] == "water_0001":
+        for s in data["sensors"]:
             value = round(float(s["sensor_value"]), 2)
             print("Id", s["sensor_id"])
             print("Value", s["sensor_value"])
@@ -333,8 +318,8 @@ def mqtt_callback(msg):
             if s["sensor_id"] == "TEMP_0001":
                 labelWaterTemp.config(text = value)
 
-    if station_id == "soil_0001":
-        for s in sensors:
+    if data["station_id"] == "soil_0001":
+        for s in data["sensors"]:
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
             if s["sensor_id"] == "temp_0001":
@@ -352,8 +337,8 @@ def mqtt_callback(msg):
             if s["sensor_id"] == "Kali_0001":
                 labelSoilK.config(text =s["sensor_value"])
 
-    if station_id == "air_0001":
-        for s in sensors:
+    if data["station_id"] == "air_0001":
+        for s in data["sensors"]:
             print("Name", s["sensor_name"])
             print("Value", s["sensor_value"])
             if s["sensor_id"] == "temp_0001":
@@ -365,63 +350,63 @@ def mqtt_callback(msg):
             if s["sensor_id"] == "CO2_0001":
                 labelAirCO2.config(text = s["sensor_value"])
 
-    if station_id == "VALVE_0001":
-        for s in sensors:
-            print("Name", s["sensor_name"])
-            print("Value", s["sensor_value"])
-            if s["sensor_id"] == "valve_0001":
-                btn_valve_1.update_button_click(s["sensor_value"])
-                value1 = btn_var_1.get()
-                if value1 != btn_valve_1.is_on: 
-                    btn_valve_1_onClick(btn_valve_1.is_on)
-                    value1 = btn_valve_1.is_on
-            if s["sensor_id"] == "valve_0002":
-                btn_valve_2.update_button_click(s["sensor_value"])
-                value2 = btn_var_2.get()
-                if value2 != btn_valve_2.is_on:
-                    btn_valve_2_onClick(btn_valve_2.is_on)
-                    value2 = btn_valve_2.is_on
-            if s["sensor_id"] == "valve_0003":
-                btn_valve_3.update_button_click(s["sensor_value"])
-                value3 = btn_var_3.get()
-                if value3 != btn_valve_3.is_on:
-                    btn_valve_3_onClick(btn_valve_3.is_on)
-                    value3 = btn_valve_3.is_on
+    # if station_id == "VALVE_0001":
+    #     for s in sensors:
+    #         print("Name", s["sensor_name"])
+    #         print("Value", s["sensor_value"])
+    #         if s["sensor_id"] == "valve_0001":
+    #             btn_valve_1.update_button_click(s["sensor_value"])
+    #             value1 = btn_var_1.get()
+    #             if value1 != btn_valve_1.is_on: 
+    #                 btn_valve_1_onClick(btn_valve_1.is_on)
+    #                 value1 = btn_valve_1.is_on
+    #         if s["sensor_id"] == "valve_0002":
+    #             btn_valve_2.update_button_click(s["sensor_value"])
+    #             value2 = btn_var_2.get()
+    #             if value2 != btn_valve_2.is_on:
+    #                 btn_valve_2_onClick(btn_valve_2.is_on)
+    #                 value2 = btn_valve_2.is_on
+    #         if s["sensor_id"] == "valve_0003":
+    #             btn_valve_3.update_button_click(s["sensor_value"])
+    #             value3 = btn_var_3.get()
+    #             if value3 != btn_valve_3.is_on:
+    #                 btn_valve_3_onClick(btn_valve_3.is_on)
+    #                 value3 = btn_valve_3.is_on
     
-    if station_id == "PUMP_0001":
-        for s in sensors:
-            print("Name", s["sensor_name"])
-            print("Value", s["sensor_value"])
-            if s["sensor_id"] == "pump_0001":
-                btn_pump_flow_1.update_button_click(s["sensor_value"])
-                value_1 = btn_var1.get()
-                if value_1 != btn_pump_flow_1.is_on:
-                    btn_pump_flow_1_onClick(btn_pump_flow_1.is_on)
-                    value_1 = btn_pump_flow_1.is_on
-            if s["sensor_id"] == "pump_0002":
-                btn_pump_flow_2.update_button_click(s["sensor_value"])
-                value_2 = btn_var2.get()
-                if value_2 != btn_pump_flow_2.is_on:
-                    btn_pump_flow_2_onClick(btn_pump_flow_2.is_on)
-                    value_2 = btn_pump_flow_2.is_on
-            if s["sensor_id"] == "pump_0003":
-                btn_pump_flow_3.update_button_click(s["sensor_value"])
-                value_3 = btn_var3.get()
-                if value_3 != btn_pump_flow_3.is_on:
-                    btn_pump_flow_3_onClick(btn_pump_flow_3.is_on)
-                    value_3 = btn_pump_flow_3.is_on
-            if s["sensor_id"] == "pump_0004":
-                btn_pump_1.update_button_click(s["sensor_value"])
-                value_4 = btn_var4.get()
-                if value_4 != btn_pump_1.is_on:
-                    btn_pump_1_onClick(btn_pump_1.is_on)
-                    value_4 = btn_pump_1.is_on
-            if s["sensor_id"] == "pump_0005":
-                btn_pump_2.update_button_click(s["sensor_value"])
-                value_5 = btn_var5.get()
-                if  value_5 != btn_pump_2.is_on:
-                    btn_pump_2_onClick(btn_pump_2.is_on)
-                    value_5 = btn_pump_2.is_on
+    # if station_id == "PUMP_0001":
+    #     for s in sensors:
+    #         print("Name", s["sensor_name"])
+    #         print("Value", s["sensor_value"])
+    #         if s["sensor_id"] == "pump_0001":
+    #             btn_pump_flow_1.update_button_click(s["sensor_value"])
+    #             value_1 = btn_var1.get()
+    #             if value_1 != btn_pump_flow_1.is_on:
+    #                 btn_pump_flow_1_onClick(btn_pump_flow_1.is_on)
+    #                 value_1 = btn_pump_flow_1.is_on
+    #         if s["sensor_id"] == "pump_0002":
+    #             btn_pump_flow_2.update_button_click(s["sensor_value"])
+    #             value_2 = btn_var2.get()
+    #             if value_2 != btn_pump_flow_2.is_on:
+    #                 btn_pump_flow_2_onClick(btn_pump_flow_2.is_on)
+    #                 value_2 = btn_pump_flow_2.is_on
+    #         if s["sensor_id"] == "pump_0003":
+    #             btn_pump_flow_3.update_button_click(s["sensor_value"])
+    #             value_3 = btn_var3.get()
+    #             if value_3 != btn_pump_flow_3.is_on:
+    #                 btn_pump_flow_3_onClick(btn_pump_flow_3.is_on)
+    #                 value_3 = btn_pump_flow_3.is_on
+    #         if s["sensor_id"] == "pump_0004":
+    #             btn_pump_1.update_button_click(s["sensor_value"])
+    #             value_4 = btn_var4.get()
+    #             if value_4 != btn_pump_1.is_on:
+    #                 btn_pump_1_onClick(btn_pump_1.is_on)
+    #                 value_4 = btn_pump_1.is_on
+    #         if s["sensor_id"] == "pump_0005":
+    #             btn_pump_2.update_button_click(s["sensor_value"])
+    #             value_5 = btn_var5.get()
+    #             if  value_5 != btn_pump_2.is_on:
+    #                 btn_pump_2_onClick(btn_pump_2.is_on)
+    #                 value_5 = btn_pump_2.is_on
 
 mqttObject = MQTTHelper()
 mqttObject.setRecvCallBack(mqtt_callback)
