@@ -18,81 +18,89 @@ from Utilities.togglebutton import *
 from mqtt import *
 from Utilities.constant import *
 
-# ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
 def toggle_fullscreen(event = None):
     state = not window.attributes('-fullscreen')
     window.attributes('-fullscreen', state)
     
     if state:
-        window .geometry(f"{window.winfo_screenwidth()}x{window.winfo_screenheight()}+0+0")
+        window.geometry(f"{window.winfo_screenwidth()}x{window.winfo_screenheight()}+0+0")
     else:
         window.geometry("1024x600")  
 
+# ser = serial.Serial(port="/dev/ttyUSB0", baudrate=9600)
+try:
+    ser = serial.Serial(port="COM7", baudrate=115200)
+except:
+    print("Modbus485**","Failed to write data")
+
+m485 = Utilities.modbus485.Modbus485(ser)
+
 window = tk.Tk()
 
-# def btn_valve_1_onClick(state):
-#     print("Button1 is click", state)
-#     if state:
-#         m485.modbus485_send(relay1_ON)
-#     else:
-#         m485.modbus485_send(relay1_OFF)
-#     pass
 
-# def btn_valve_2_onClick(state):
-#     print("Button2 is click", state)
-#     if state:
-#         m485.modbus485_send(relay2_ON)
-#     else:
-#         m485.modbus485_send(relay2_OFF)
-#     pass
+def btn_valve_1_onClick(state):
+    print("Button1 is click", state)
+    if state:
+        m485.modbus485_send(relay1_ON)
+    else:
+        m485.modbus485_send(relay1_OFF)
+    pass
 
-# def btn_valve_3_onClick(state):
-#     print("Button3 is click", state)
-#     if state:
-#         m485.modbus485_send(relay3_ON)
-#     else:
-#         m485.modbus485_send(relay3_OFF)
-#     pass
+def btn_valve_2_onClick(state):
+    print("Button2 is click", state)
+    if state:
+        m485.modbus485_send(relay2_ON)
+    else:
+        m485.modbus485_send(relay2_OFF)
+    pass
 
-# def btn_pump_flow_1_onClick(state):
-#     print("Flow 1 is click", state)
-#     if state:
-#         m485.modbus485_send(relay4_ON)
-#     else:
-#         m485.modbus485_send(relay4_OFF)
-#     pass
+def btn_valve_3_onClick(state):
+    print("Button3 is click", state)
+    if state:
+        m485.modbus485_send(relay3_ON)
+    else:
+        m485.modbus485_send(relay3_OFF)
+    pass
 
-# def btn_pump_flow_2_onClick(state):
-#     print("Flow 2 is click", state)
-#     if state:
-#         m485.modbus485_send(relay5_ON)
-#     else:
-#         m485.modbus485_send(relay5_OFF)
-#     pass
+def btn_pump_flow_1_onClick(state):
+    print("Flow 1 is click", state)
+    if state:
+        m485.modbus485_send(relay4_ON)
+    else:
+        m485.modbus485_send(relay4_OFF)
+    pass
 
-# def btn_pump_flow_3_onClick(state):
-#     print("Flow 3 is click", state)
-#     if state:
-#         m485.modbus485_send(relay6_ON)
-#     else:
-#         m485.modbus485_send(relay6_OFF)
-#     pass
+def btn_pump_flow_2_onClick(state):
+    print("Flow 2 is click", state)
+    if state:
+        m485.modbus485_send(relay5_ON)
+    else:
+        m485.modbus485_send(relay5_OFF)
+    pass
 
-# def btn_pump_1_onClick(state):
-#     print("Pump 1 is click", state)
-#     if state:
-#         m485.modbus485_send(relay7_ON)
-#     else:
-#         m485.modbus485_send(relay7_OFF)
-#     pass
+def btn_pump_flow_3_onClick(state):
+    print("Flow 3 is click", state)
+    if state:
+        m485.modbus485_send(relay6_ON)
+    else:
+        m485.modbus485_send(relay6_OFF)
+    pass
 
-# def btn_pump_2_onClick(state):
-#     print("Pump 2 is click", state)
-#     if state:
-#         m485.modbus485_send(relay8_ON)
-#     else:
-#         m485.modbus485_send(relay8_OFF)
-#     pass
+def btn_pump_1_onClick(state):
+    print("Pump 1 is click", state)
+    if state:
+        m485.modbus485_send(relay7_ON)
+    else:
+        m485.modbus485_send(relay7_OFF)
+    pass
+
+def btn_pump_2_onClick(state):
+    print("Pump 2 is click", state)
+    if state:
+        m485.modbus485_send(relay8_ON)
+    else:
+        m485.modbus485_send(relay8_OFF)
+    pass
 
 
 # Bind the F11 key to toggle full-screen
@@ -105,6 +113,7 @@ window.bind("<Escape>", toggle_fullscreen)
 window.attributes('-fullscreen', True)
 window.geometry("{0}x{1}+0+0".format(window.winfo_screenwidth(), window.winfo_screenheight()))
 window.wm_attributes("-topmost", 1)
+
 
 window.title("Rapido Project")
 screen_width = window.winfo_screenwidth()
