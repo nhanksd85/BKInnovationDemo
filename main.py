@@ -64,23 +64,26 @@ window = tk.Tk()
 
 def btn_valve_1_onClick(state):
     print("Button1 is click", state)
+    print("Add topic smarthome")
     if state:
         #m485.modbus485_send(relay1_ON)
         valve1.sensor_value = 1
     else:
         #m485.modbus485_send(relay1_OFF)
         valve1.sensor_value = 0
-    mqtt_publish(mqttObject,'/innovation/valvecontroller/', valveStation.to_json())
+    #mqtt_publish(mqttObject,'/innovation/airmonitoring/smarthome', valveStation.to_json())
+    mqtt_publish(mqttObject, '/server/monitoring/AABBCCDD/sensor', '{"id": "atomdisplay", "temp": 27.37, "press": 1009.67, "humid": 56.62}')
 
 def btn_valve_2_onClick(state):
     print("Button2 is click", state)
     if state:
-        #m485.modbus485_send(relay2_ON)
+        m485.modbus485_send(relay2_ON)
         valve2.sensor_value = 1
     else:
         #m485.modbus485_send(relay2_OFF)
         valve2.sensor_value = 0
-    mqtt_publish(mqttObject,'/innovation/valvecontroller/', valveStation.to_json())
+    print("Add topic smarthome")
+    mqtt_publish(mqttObject,'/innovation/smarthome', valveStation.to_json())
 
 
 def btn_valve_3_onClick(state):
@@ -358,7 +361,7 @@ btn_pump_2.button_place(860, 425)
 
 def mqtt_callback(msg):
     print("Main.py  ---", msg)
-
+    return
     data = json.loads(msg)
     station_id = data["station_id"]
     sensors = data["sensors"]
@@ -472,6 +475,9 @@ def mqtt_publish(mqttobj, topic, msg):
 
 mqttObject = MQTTHelper()
 mqttObject.setRecvCallBack(mqtt_callback)
+
+# from adafruit_mqtt import *
+# adafruit_obj = Adafruit_MQTT()
 
 window.mainloop()
 # while True:
